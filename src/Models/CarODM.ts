@@ -31,8 +31,8 @@ class CarODM {
     return this.model.find();
   }
 
-  public async getById(_id:string): Promise<ICar | null> {
-    return this.model.findOne({ _id });
+  public async getById(id:string): Promise<ICar | null> {
+    return this.model.findById(id);
   }
 }
 
