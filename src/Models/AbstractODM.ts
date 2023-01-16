@@ -3,41 +3,34 @@ import {
   Schema,
   model,
   models,
+  isValidObjectId,
+  UpdateQuery,
 } from 'mongoose';
-import IVehicle from '../Interfaces/IVehicle';
 
-class AbstractODM {
-  private schema: Schema; // Atributo para o "molde"
-  private model: Model<IVehicle>; // Atributo para criar coleção e fornecer acesso ao banco
+abstract class AbstractODM<T> {
+  protected model: Model<T>; // Atributo para criar coleção e fornecer acesso ao banco
+  protected schema: Schema; // Atributo para o "molde"
+  protected modelName: string;
 
-  constructor() {
-    this.schema = new Schema<IVehicle>({
-      // model: { type: String, required: true },
-      // year: { type: Number, required: true },
-      // color: { type: String, required: true },
-      // status: { type: Boolean, required: false },
-      // buyValue: { type: Number, required: true },
-      // category: { type: String, required: true },
-      // engineCapacity: { type: Number, required: true },
-    });
-    this.model = models.Vehicle || model('Vehicle', this.schema); // Antes de criar o Schema, verificar se o schema já existe. Caso não exista, o schema será criado. 
+  constructor(schema: Schema, modelName: string) {
+    this.schema = schema;
+    this.modelName = modelName;
+    this.model = models[this.modelName] || model(this.modelName, this.schema); // Antes de criar o Schema, verificar se o schema já existe. Caso não exista, o schema será criado. 
   }
 
-  // public async create(vehicle: IVehicle): Promise<IVehicle> {
-  //   return this.model.create({ ...vehicle });
-  // }
+  public async create(obj: T): Promise<T> {
+    return this.model.create({ ...obj });
+  }
 
-  // public async getAll() {
-  //   return this.model.find();
-  // }
+  public async updateById(_id:string, obj: Partial<T>): Promise<T | null> {
+    if (!isValidObjectId(_id)) throw Error('Invalid mongo id');
 
-  // public async getById(id:string): Promise<IVehicle | null> {
-  //   return this.model.findById(id);
-  // }
-
-  // public async updateById(id:string, updatedVehicle: IVehicle): Promise<IVehicle | null> {
-  //   return this.model.findByIdAndUpdate(id, updatedVehicle, { new: true });
-  // }
+    return this.model.findByIdAndUpdate(
+      { _id }, 
+      { ...obj } as UpdateQuery<T>, 
+      { new: true },
+    );
+  }
 }
 
 export default AbstractODM;
