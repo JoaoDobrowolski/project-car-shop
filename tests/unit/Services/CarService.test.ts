@@ -98,4 +98,61 @@ describe('Car tests', function () {
     expect(result).to.be.deep.equal(undefined);
     sinon.restore();
   });
+
+  it('update car by id', async function () {
+    // Arrange
+    const carInput: ICar = {
+      model: 'Gol',
+      year: 2008,
+      color: 'white',
+      status: true,
+      buyValue: 21000,
+      doorsQty: 4,
+      seatsQty: 5,
+    };
+
+    const carOutput: Car = new Car({
+      id: '63c1e8b47cb32146dbb4c3e8',
+      model: 'Gol',
+      year: 2008,
+      color: 'white',
+      status: true,
+      buyValue: 21000,
+      doorsQty: 4,
+      seatsQty: 5,
+    });
+
+    sinon.stub(Model, 'findByIdAndUpdate').resolves(carOutput);
+
+    // Act
+    const service = new CarService();
+    const result = await service.updateById('63c1e8b47cb32146dbb4c3e8', carInput);
+
+    // Assert
+    expect(result).to.be.deep.equal(carOutput);
+    sinon.restore();
+  });
+
+  it('cannot update car by id', async function () {
+    // Arrange
+    const carInput: ICar = {
+      model: 'Gol',
+      year: 2008,
+      color: 'white',
+      status: true,
+      buyValue: 21000,
+      doorsQty: 4,
+      seatsQty: 5,
+    };
+
+    sinon.stub(Model, 'findByIdAndUpdate').resolves();
+
+    // Act
+    const service = new CarService();
+    const result = await service.updateById('63c1e8b47cb32146dbb4c3e8', carInput);
+
+    // Assert
+    expect(result).to.be.deep.equal(undefined);
+    sinon.restore();
+  });
 });
