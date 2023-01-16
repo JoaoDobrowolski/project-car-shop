@@ -10,15 +10,15 @@ class Motorcycle {
   private category: string;
   private engineCapacity: number;
 
-  constructor(car: IMotorcycle) {
-    this.id = car.id;
-    this.model = car.model;
-    this.year = car.year;
-    this.color = car.color;
-    this.status = car.status || false;
-    this.buyValue = car.buyValue;
-    this.category = car.category;
-    this.engineCapacity = car.engineCapacity;
+  constructor(motorcycle: IMotorcycle) {
+    this.id = motorcycle.id;
+    this.model = motorcycle.model;
+    this.year = motorcycle.year;
+    this.color = motorcycle.color;
+    this.status = motorcycle.status || false;
+    this.buyValue = motorcycle.buyValue;
+    this.category = motorcycle.category;
+    this.engineCapacity = motorcycle.engineCapacity;
   }
 }
 

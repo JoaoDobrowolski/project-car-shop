@@ -6,17 +6,30 @@ import Car from '../../../src/Domains/Car';
 import CarService from '../../../src/Services/CarService';
 
 describe('Car tests', function () {
+  const inputMock = {
+    model: 'Gol',
+    year: 2008,
+    color: 'white',
+    status: true,
+    buyValue: 20000,
+    doorsQty: 4,
+    seatsQty: 5,
+  };
+
+  const outputMock = {
+    id: '63c1e8b47cb32146dbb4c3e8',
+    model: 'Gol',
+    year: 2008,
+    color: 'white',
+    status: true,
+    buyValue: 20000,
+    doorsQty: 4,
+    seatsQty: 5,
+  };
+  
   it('create car', async function () {
     // Arrange
-    const carInput: ICar = {
-      model: 'Gol',
-      year: 2008,
-      color: 'white',
-      status: true,
-      buyValue: 20000,
-      doorsQty: 4,
-      seatsQty: 5,
-    };
+    const carInput: ICar = inputMock;
     const carOutput: Car = new Car({
       id: '63c1e8b47cb32146dbb4c3e8',
       model: 'Gol',
@@ -41,16 +54,7 @@ describe('Car tests', function () {
 
   it('find cars', async function () {
     // Arrange
-    const carOutput: Car = new Car({
-      id: '63c1e8b47cb32146dbb4c3e8',
-      model: 'Gol',
-      year: 2008,
-      color: 'white',
-      status: true,
-      buyValue: 20000,
-      doorsQty: 4,
-      seatsQty: 5,
-    });
+    const carOutput: Car = new Car(outputMock);
 
     sinon.stub(Model, 'find').resolves([carOutput]);
     // Act
@@ -64,16 +68,7 @@ describe('Car tests', function () {
 
   it('find car by id', async function () {
     // Arrange
-    const carOutput: Car = new Car({
-      id: '63c1e8b47cb32146dbb4c3e8',
-      model: 'Gol',
-      year: 2008,
-      color: 'white',
-      status: true,
-      buyValue: 20000,
-      doorsQty: 4,
-      seatsQty: 5,
-    });
+    const carOutput: Car = new Car(outputMock);
 
     sinon.stub(Model, 'findById').resolves(carOutput);
 
@@ -101,26 +96,9 @@ describe('Car tests', function () {
 
   it('update car by id', async function () {
     // Arrange
-    const carInput: ICar = {
-      model: 'Gol',
-      year: 2008,
-      color: 'white',
-      status: true,
-      buyValue: 21000,
-      doorsQty: 4,
-      seatsQty: 5,
-    };
+    const carInput: ICar = inputMock;
 
-    const carOutput: Car = new Car({
-      id: '63c1e8b47cb32146dbb4c3e8',
-      model: 'Gol',
-      year: 2008,
-      color: 'white',
-      status: true,
-      buyValue: 21000,
-      doorsQty: 4,
-      seatsQty: 5,
-    });
+    const carOutput: Car = new Car(outputMock);
 
     sinon.stub(Model, 'findByIdAndUpdate').resolves(carOutput);
 
@@ -135,15 +113,7 @@ describe('Car tests', function () {
 
   it('cannot update car by id', async function () {
     // Arrange
-    const carInput: ICar = {
-      model: 'Gol',
-      year: 2008,
-      color: 'white',
-      status: true,
-      buyValue: 21000,
-      doorsQty: 4,
-      seatsQty: 5,
-    };
+    const carInput: ICar = inputMock;
 
     sinon.stub(Model, 'findByIdAndUpdate').resolves();
 
