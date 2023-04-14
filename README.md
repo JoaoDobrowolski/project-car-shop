@@ -16,8 +16,6 @@ Foram feitos testes de cobertura com Mocha.
 
 É recomendado o uso de Docker para utilizar este projeto.
 
-Lembrar de parar o mongo se estiver usando localmente na porta padrão (27017), ou adapte, caso queria fazer uso da aplicação em containers.
-
 Para rodar os serviços node e db:
 
 `docker-compose up -d`
@@ -44,6 +42,8 @@ Configurações mínimas para execução do projeto:
 Para iniciar o projeto, execute o seguinte comando no terminal na pasta raiz:
 
 `npm run dev`
+
+Lembrar de parar o mongo se estiver usando localmente na porta padrão (27017), ou adapte, caso queria fazer uso da aplicação em containers.
 
 -----
 
